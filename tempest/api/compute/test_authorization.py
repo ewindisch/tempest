@@ -30,6 +30,10 @@ class AuthorizationTestJSON(base.BaseV2ComputeTest):
 
     @classmethod
     def setUpClass(cls):
+        if not CONF.compute_feature_enabled.create_image:
+            skip_msg = ("%s skipped as we cannot create images." % cls.__name__)
+            raise cls.skipException(skip_msg)
+
         # No network resources required for this test
         cls.set_network_resources()
         super(AuthorizationTestJSON, cls).setUpClass()
