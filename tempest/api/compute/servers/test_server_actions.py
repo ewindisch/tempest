@@ -24,6 +24,7 @@ from tempest.common.utils.linux import remote_client
 from tempest import config
 from tempest import exceptions
 from tempest import test
+from tempest.test import services
 
 CONF = config.CONF
 
@@ -233,6 +234,7 @@ class ServerActionsTestJSON(base.BaseV2ComputeTest):
                 raise exceptions.TimeoutException(message)
 
     @test.attr(type='gate')
+    @services('image')
     def test_create_backup(self):
         # Positive test:create backup successfully and rotate backups correctly
         # create the first and the second backup
