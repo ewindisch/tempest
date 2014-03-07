@@ -15,13 +15,20 @@
 
 from tempest.api.compute import base
 from tempest.common.utils import data_utils
+from tempest import config
 from tempest import test
+
+CONF = config.CONF
 
 
 class ServerRescueTestJSON(base.BaseV2ComputeTest):
 
     @classmethod
     def setUpClass(cls):
+        if not CONF.service_available.cinder:
+            skip_msg = ("%s skipped as Cinder is not available" % cls.__name__)
+            raise cls.skipException(skip_msg)
+
         cls.set_network_resources(network=True, subnet=True, router=True)
         super(ServerRescueTestJSON, cls).setUpClass()
 
