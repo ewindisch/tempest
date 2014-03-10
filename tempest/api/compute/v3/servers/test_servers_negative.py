@@ -16,6 +16,8 @@
 import base64
 import sys
 
+import testtools
+
 from tempest.api.compute import base
 from tempest import clients
 from tempest.common.utils import data_utils
@@ -382,6 +384,8 @@ class ServersNegativeV3Test(base.BaseV3ComputeTest):
                           self.client.restore_soft_deleted_server,
                           self.server_id)
 
+    @testtools.skipUnless(CONF.compute_feature_enabled.create_image,
+                          'Environment unable to create images.')
     @test.attr(type=['negative', 'gate'])
     def test_shelve_non_existent_server(self):
         # shelve a non existent server
@@ -389,6 +393,8 @@ class ServersNegativeV3Test(base.BaseV3ComputeTest):
         self.assertRaises(exceptions.NotFound, self.client.shelve_server,
                           nonexistent_server)
 
+    @testtools.skipUnless(CONF.compute_feature_enabled.create_image,
+                          'Environment unable to create images.')
     @test.attr(type=['negative', 'gate'])
     def test_shelve_shelved_server(self):
         # shelve a shelved server.
@@ -415,6 +421,8 @@ class ServersNegativeV3Test(base.BaseV3ComputeTest):
                           self.client.shelve_server,
                           self.server_id)
 
+    @testtools.skipUnless(CONF.compute_feature_enabled.create_image,
+                          'Environment unable to create images.')
     @test.attr(type=['negative', 'gate'])
     def test_unshelve_non_existent_server(self):
         # unshelve a non existent server
@@ -422,6 +430,8 @@ class ServersNegativeV3Test(base.BaseV3ComputeTest):
         self.assertRaises(exceptions.NotFound, self.client.unshelve_server,
                           nonexistent_server)
 
+    @testtools.skipUnless(CONF.compute_feature_enabled.create_image,
+                          'Environment unable to create images.')
     @test.attr(type=['negative', 'gate'])
     def test_unshelve_server_invalid_state(self):
         # unshelve an active server.

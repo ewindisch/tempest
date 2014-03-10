@@ -66,6 +66,8 @@ class DeleteServersV3Test(base.BaseV3ComputeTest):
         self.assertEqual('204', resp['status'])
         self.client.wait_for_server_termination(server['id'])
 
+    @testtools.skipUnless(CONF.compute_feature_enabled.create_image,
+                          'Environment unable to create images.')
     @test.attr(type='gate')
     def test_delete_server_while_in_shelved_state(self):
         # Delete a server while it's VM state is Shelved
