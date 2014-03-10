@@ -51,6 +51,11 @@ class TestServerBasicOps(manager.OfficialClientTest):
                                                  scenario_flavor)
 
     def setUp(self):
+        if not CONF.compute_feature_enabled.pause:
+            raise self.skipException('Pause not supported.')
+        if not CONF.compute_feature_enabled.suspend:
+            raise self.skipException('Suspend not supported.')
+
         super(TestServerBasicOps, self).setUp()
         # Setup image and flavor the test instance
         # Support both configured and injected values
